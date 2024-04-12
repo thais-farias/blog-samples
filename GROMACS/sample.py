@@ -23,7 +23,6 @@ task.results = output_bucket
 # Task constants are the main way of controlling a task's behaviour
 task.constants['DOCKER_REPO'] = 'qarnotlab/gromacs'
 task.constants['DOCKER_TAG'] = '2021.2'
-# task.constants['DOCKER_CMD'] = "./run_md.sh"
 task.constants['DOCKER_CMD'] = 'sh -c "./run_md.sh 2>&1 | tee output.log"'
 
 # Submit the task to the Api, that will launch it on the cluster
