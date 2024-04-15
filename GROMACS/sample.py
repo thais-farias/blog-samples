@@ -3,7 +3,6 @@
 import qarnot
 
 # Create a connection
-conn = qarnot.connection.Connection(client_token="YOUR_TOKEN")
 
 # Create a task
 task = conn.create_task('md-gromacs', 'docker-batch', 1)
