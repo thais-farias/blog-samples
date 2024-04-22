@@ -4,7 +4,7 @@
 import qarnot
 
 # Connect to the Qarnot platform
-conn=qarnot.connection.Connection(client_token='<<<MY_SECRET_TOKEN>>>')
+conn=qarnot.connection.Connection(client_token='<<MY_SECRET_TOKEN>>')
 
 # Create a task
 task = conn.create_task("BLASTN-demo", "docker-batch", 1)
