@@ -4,7 +4,7 @@ import sys
 import qarnot
 
 # Create a connection
-conn = qarnot.Connection(client_token='<<<MY_SECRET_TOKEN>>>')
+conn = qarnot.Connection(client_token='MY_SECRET_TOKEN')
 
 # Create a task
 task = conn.create_task('ortools-demo', 'docker-batch', 1)
