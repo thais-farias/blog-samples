@@ -32,7 +32,7 @@ task.results = conn.create_bucket("openfoam-out")
 task.constants['OPENFOAM_INPUT_DIRECTORY_NAME'] = 'motorbike-'+os.getenv("DOCKER_TAG")
 task.constants['RUN_SCRIPT'] = "Allrun"
 task.constants['DOCKER_TAG'] = os.getenv("DOCKER_TAG")
-task.constants['DOCKER_SSH'] = '<<<SSH_KEY>>>'
+task.constants['DOCKER_SSH'] = '<MY_SSH_KEY>'
 
 # Define checkpoint
 task.snapshot(60)
