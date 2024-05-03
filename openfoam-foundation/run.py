@@ -7,7 +7,7 @@ import os
 # Create a connection, from which all other objects will be derived
 # Enter client token here
 
-conn = qarnot.connection.Connection(client_token='<<<TOKEN_ID>>>')
+conn = qarnot.connection.Connection(client_token="MY_SECRET_TOKEN")
 
 # -------------------------------------------------------------------------- #
 NB_NODES = 2
