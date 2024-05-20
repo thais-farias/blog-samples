@@ -1,0 +1,28 @@
+concurrent = 10
+
+[[runners]]
+  url = "$CI_SERVER_URL"
+  token = "$RUNNER_TOKEN"
+  name = "$RUNNER_NAME"
+  executor = "docker+machine"
+  limit = 10
+  [runners.docker]
+    image = "alpine:latest"
+    privileged = true
+  [runners.machine]
+    IdleTime = 30
+    MaxGrowthRate = 3
+    MachineName = "auto-scale-%s" # Should not be modified, guarantees unicity of Qarnot task name
+    MachineDriver = "qarnot"
+    MachineOptions = [
+      "qarnot-token=$QARNOT_TOKEN",
+      "qarnot-vpn=$VPN"
+    ]
+  [runners.cache]
+    Type = "s3"
+    Shared = false
+    [runners.cache.s3]
+      ServerAddress = "storage.qarnot.com"
+      AccessKey = "$EMAIL"
+      SecretKey = "$QARNOT_TOKEN"
+      BucketName = "$BUCKET_NAME" # Should not be modified, guarantees unicity of bucket
