@@ -1,0 +1,50 @@
+# This is a template configuration file. It is meant to show as much parameters as possible.
+# For a standard configuration template, please see config.toml.default
+# For more details on how to configure your autoscale runner, please see https://docs.gitlab.com/runner/configuration/autoscale.html
+
+concurrent = 100                     # All registered runners can run up to 100 concurrent jobs
+
+[[runners]]                          # In this template we specify only one runner but a config file can have multiple [[runners]] sections
+  url = "$CI_SERVER_URL"
+  token = "$RUNNER_TOKEN"
+  name = "$RUNNER_NAME"
+  executor = "docker+machine"        # This runner is using the 'docker+machine' executor
+  limit = 150                        # This runner can have at most 150 running machines (running jobs or idle)
+  [runners.docker]
+    image = "alpine:latest"          # The default image used for jobs is 'alpine:latest'
+    privileged = true
+  [runners.machine]
+    IdleCount = 5                    # There must be 5 machines in Idle state
+    IdleTime = 600                   # Each machine can be in Idle state up to 600 seconds (after this it will be removed if nb_idle_machines > IdleCount)
+    MaxGrowthRate = 2                # No more than two machines can be provisioned at the same time
+    MaxBuilds = 100                  # Each machine can handle up to 100 jobs in a row (after this it will be removed)
+    MachineName = "auto-scale-%s"    # Each machine will have a unique name ('%s' is required)
+    MachineDriver = "qarnot"
+    MachineOptions = [
+      "qarnot-token=$QARNOT_TOKEN",
+      "qarnot-vpn=$VPN"
+    ]
+    # All runners.machine.autoscaling sections are parsed.
+    # The last one to match the current time is active.
+    # If none match, the values from the root of [runners.machine] are used.
+    [[runners.machine.autoscaling]]             # Define periods with different settings (syntax: https://github.com/gorhill/cronexpr#implementation)
+      Periods = ["* * 9-17 * * mon-fri *"]      # Every workday between 9 and 17 UTC
+      IdleScaleFactor = 1.5                     # Means that the target number of idle machines is: max(IdleCountMin, min(1.5*nb_of_running_machines, IdleCount))
+      IdleCount = 50                            # The target number of idle machines is less than or equal to 50
+      IdleCountMin = 5                          # The target number of idle machines is greater than or equal to 5
+      IdleTime = 3600
+      Timezone = "UTC"
+    [[runners.machine.autoscaling]]
+      Periods = ["* * * * * sat,sun *"]         # During the weekends
+      IdleCount = 5
+      IdleTime = 60
+      Timezone = "UTC"
+  [runners.cache]
+    Type = "s3"
+    Path = "path/to/prefix"           # The prefix of this particular runner in the S3 URLs
+    Shared = false                    # The cache of this runner will not be shared with other runners
+    [runners.cache.s3]
+      ServerAddress = "storage.qarnot.com"
+      AccessKey = "$EMAIL"
+      SecretKey = "$QARNOT_TOKEN"
+      BucketName = "$BUCKET_NAME" # Should not be modified, guarantees unicity of bucket
