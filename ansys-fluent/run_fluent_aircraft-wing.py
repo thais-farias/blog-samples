@@ -9,10 +9,13 @@ conn = qarnot.connection.Connection(client_token='MY_SECRET_TOKEN')
 # Create a task
 task = conn.create_task('fluent-aircraft', 'ansys-fluent', 2)
 
-# Create Bucket
-input_bucket = conn.retrieve_or_create_bucket("fluent-aircraft")
+# Create and append input bucket
+input_bucket = conn.retrieve_or_create_bucket("fluent-aircraft-input")
 input_bucket.sync_directory("input")
 task.resources.append(input_bucket)
+
+# Create output bucket
+task.results = conn.create_bucket("fluent-aircraft-output")
 
 # Fluent Command
 task.constants['FLUENT_CMD'] = "fluent -g 3ddp -t56 -i run.jou"
