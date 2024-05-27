@@ -29,9 +29,9 @@ task.resources.append(input_bucket)
 # Create a result bucket and attach it to the task
 task.results = conn.create_bucket("openfoam-out")
 
-task.constants['OPENFOAM_INPUT_DIRECTORY_NAME'] = 'motorbike-'+os.getenv("DOCKER_TAG")
-task.constants['RUN_SCRIPT'] = "Allrun"
-task.constants['DOCKER_TAG'] = os.getenv("DOCKER_TAG")
+task.constants['OPENFOAM_INPUT_DIRECTORY_NAME'] = "MOTORBIKE-11"
+task.constants['RUN_SCRIPT'] = "MOTORBIKE-11/Allrun"
+task.constants['DOCKER_TAG'] = "11"
 task.constants['DOCKER_SSH'] = '<MY_SSH_KEY>'
 
 # Define checkpoint
