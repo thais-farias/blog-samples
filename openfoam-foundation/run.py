@@ -29,7 +29,7 @@ task.resources.append(input_bucket)
 # Create a result bucket and attach it to the task
 task.results = conn.create_bucket("openfoam-out")
 
-task.constants['OPENFOAM_INPUT_DIRECTORY_NAME'] = 'MOTORBIKE-11
+task.constants['OPENFOAM_INPUT_DIRECTORY_NAME'] = 'MOTORBIKE-11'
 task.constants['RUN_SCRIPT'] = "MOTORBIKE-11/Allrun"
 task.constants['DOCKER_TAG'] = "11"
 
