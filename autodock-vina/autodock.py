@@ -4,8 +4,7 @@ import qarnot
 import sys
 
 # Create a connection
-conn = qarnot.Connection('qarnot.conf')
-
+conn = qarnot.Connection(client_token="MY_SECRET_TOKEN")
 # Create a task
 task = conn.create_task('autodock_vina-demo', 'docker-batch', 1)
 
