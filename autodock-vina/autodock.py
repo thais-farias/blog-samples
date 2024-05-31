@@ -13,7 +13,7 @@ error_happened = False
 try:
     # Create a resource bucket and add the content of resources_vina_qarnot into it
     input_bucket = conn.create_bucket('autodock_vina-demo-input')
-    input_bucket.sync_directory('input/')
+    input_bucket.sync_directory('indinavir-HIV-docking/')
 
     # Attach the bucket to the task
     task.resources.append(input_bucket)
